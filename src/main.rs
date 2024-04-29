@@ -1,52 +1,45 @@
+// bring the contents of todo_app.rs into scope 
 mod todo_app;
-
-use std::io;
-use std::io::Write;
-use todo_app::{TodoApp};
-
+use todo_app::TodoApp;
+///
+/// This is the skeleton of  the CLI application which will utilize TodoApp
+/// 
 fn main() {
+    // Create a new instance of TodoApp
     let mut app = TodoApp::new();
 
+    // Display the welcome message and usage instructions
+    println!("Welcome to your Todo app");
+    // Print out the usage
+    usage();
+
+    // Start the main loop. see: https://doc.rust-lang.org/beta/std/keyword.loop.html
     loop {
-        app.list(&mut io::stdout());
-        println!();
-        println!("Welcome to your Todo app");
-        usage();
+        // [@@TASK@@] on each loop display the list of todo items using `app.list()` 
+        //            Hint: You'll need to loop over the Vec that is returned.
+        
+        
         print!("> ");
-        io::stdout().flush().unwrap();
-
-        let mut input = String::new();
-        io::stdin().read_line(&mut input).unwrap();
-        let input = input.trim();
-
+        // [@@TASK@@] Use the io standard lib to prompt for and read user input. Remember it is 
+        //            best to trim that input of whitespace.  
+        
+        
+        // [@@TASK@@] Start processing the user's command
         if input.starts_with("add") {
-            let text = input.strip_prefix("add").unwrap().trim().to_string();
-            app.add(text);
-            println!("Todo item added successfully!");
-        } else if input.starts_with("complete") {
-            let id = input.strip_prefix("complete").unwrap().trim().parse::<usize>().unwrap();
-            app.complete(id);
-            println!("Todo item marked as completed!");
-        } else if input == "list" {
-            // Do nothing, as the list is already displayed at the beginning of each iteration
-        } else if input == "help" {
-            usage();
-        } else if input == "x" {
-            println!("Exiting...");
-            break;
+            // Extract the text of the input after the 'command'
+            // Add the new todo item to the app
+            // Print a success message
+        //    
+        // [@@TASK@@] continue to process known commands with `else if` for each available command
+        //
         } else {
-            println!("Invalid command. Type '?' to see available commands.");
+            // [@@TASK@@] Print an error message for invalid commands
         }
-
+        // Ensure the prompt is on a new line in the terminal
         println!();
     }
 }
 
 fn usage() {
-    println!("Available commands:");
-    println!("  add <todo_text>    - Add a new todo item");
-    println!("  complete <todo_id> - Mark a todo item as completed");
-    println!("  list               - List all todo items");
-    println!("  ?                  - Show available commands");
-    println!("  x                  - Exit the program");
+    // [@@TASK@@] print out the list of available commands including short descriptions
 }
